@@ -1180,7 +1180,7 @@ AppCommandProc(register DWORD id)
 	  if(szFiles == NULL && pDataObj != NULL && pDataObj->lpVtbl->GetData(pDataObj, &fmtetcDrop, &stgmed) == S_OK)
 	  {
 	  	LPWSTR lpFile = GlobalLock(stgmed.hGlobal);
-	  	DWORD cchFile = wcslen(lpFile);
+	  	SIZE_T cchFile = wcslen(lpFile);
 		szFiles = (LPWSTR)LocalAlloc(LMEM_FIXED, (cchFile+3) * sizeof(WCHAR));
 		lstrcpy (szFiles+1, lpFile);
 		*szFiles = '\"';
@@ -1624,7 +1624,7 @@ AppCommandProc(register DWORD id)
 
       } else {
          dwSuperDlgMode = id;
-         ret = DialogBox(hAppInstance, MAKEINTRESOURCE(CHOOSEDRIVEDLG), hwndFrame, ChooseDriveDlgProc);
+         ret = (INT)DialogBox(hAppInstance, MAKEINTRESOURCE(CHOOSEDRIVEDLG), hwndFrame, ChooseDriveDlgProc);
       }
 
       break;
@@ -1980,7 +1980,7 @@ ChangeDisplay:
 
        // toggle pluses view bit
 
-       dwFlags = GetWindowLongPtr(hwndActive, GWL_VIEW) ^ VIEW_PLUSES;
+       dwFlags = (DWORD)GetWindowLongPtr(hwndActive, GWL_VIEW) ^ VIEW_PLUSES;
 
        SetWindowLongPtr(hwndActive, GWL_VIEW, dwFlags);
 
@@ -2046,7 +2046,7 @@ CHECK_OPTION:
 
     case IDM_REFRESH:
        {
-          INT i;
+          UINT i;
 
 #define NUMDRIVES (sizeof(rgiDrive)/sizeof(rgiDrive[0]))
           INT rgiSaveDrives[NUMDRIVES];
@@ -2131,7 +2131,7 @@ ACPCallHelp:
 
     default:
        {
-          INT i;
+          UINT i;
 
           for (i = 0; i < iNumExtensions; i++) {
              WORD delta = extensions[i].Delta;

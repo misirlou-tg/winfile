@@ -660,7 +660,7 @@ SetMDIWindowText(
             // if (wTextAttribs & TA_LOWERCASE)
             //    CharLower(szTemp);
 
-            drive = GetWindowLongPtr(hwnd, GWL_TYPE);
+            drive = (DRIVE)GetWindowLongPtr(hwnd, GWL_TYPE);
             if (drive != -1) {     /* if not a search window */
                lstrcat(szTemp, SZ_SPACEDASHSPACE);
 
@@ -684,7 +684,7 @@ SetMDIWindowText(
    }
 
 
-   drive = GetWindowLongPtr(hwnd, GWL_TYPE);
+   drive = (DRIVE)GetWindowLongPtr(hwnd, GWL_TYPE);
 
    uTitleLen = lstrlen(szTitle);
 
@@ -1447,7 +1447,7 @@ ExecProgram(LPTSTR lpPath, LPTSTR lpParms, LPTSTR lpDir, BOOL bLoadIt, BOOL bRun
      lpszTitle++;
 
   SetErrorMode(0);
-  ret = (DWORD) ShellExecute(hwndFrame, bRunAs ? L"runas" : NULL, lpPath, lpParms, lpDir, bLoadIt ? SW_SHOWMINNOACTIVE : SW_SHOWNORMAL);
+  ret = (DWORD)(INT_PTR)ShellExecute(hwndFrame, bRunAs ? L"runas" : NULL, lpPath, lpParms, lpDir, bLoadIt ? SW_SHOWMINNOACTIVE : SW_SHOWNORMAL);
 
   SetErrorMode(1);
 
@@ -1492,8 +1492,8 @@ ExecProgram(LPTSTR lpPath, LPTSTR lpParms, LPTSTR lpDir, BOOL bLoadIt, BOOL bRun
          break;
 
       default:
-         if (ret < 32)
-            goto EPExit;
+          if (ret < 32)
+              goto EPExit;
 
          if (bMinOnRun && !bLoadIt)
             ShowWindow(hwndFrame, SW_SHOWMINNOACTIVE);

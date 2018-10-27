@@ -286,7 +286,7 @@ DoHelp:
 VOID
 FormatDiskette(HWND hwnd, BOOL bModal)
 {
-    INT res = 0;
+    LRESULT res = 0;
     DWORD dwSave;
 
     // in case current drive is on floppy
@@ -745,7 +745,7 @@ FormatSelectDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
     HWND  hwndSelectDrive;
     INT   driveIndex;
-    INT   comboxIndex;
+    LRESULT comboxIndex;
     DRIVE drive;
     DWORD dwFormatResult;
     TCHAR szDrive[CCH_DRIVE] = { 0 };
@@ -1427,7 +1427,7 @@ UpdateConnections(BOOL bUpdateDriveList)
       if (GetWindow(hwnd, GW_OWNER) || hwnd == hwndSearch)
          continue;
 
-      drive = GetWindowLongPtr(hwnd, GWL_TYPE);
+      drive = (DRIVE)GetWindowLongPtr(hwnd, GWL_TYPE);
 
       //
       // IsValidDisk uses GetDriveType which was updated if

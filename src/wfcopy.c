@@ -469,7 +469,7 @@ AddComponent:
              //
              if (lpszDot) {
 
-                nSpaceLeft += pT-lpszDot;
+                nSpaceLeft += (INT)(pT-lpszDot);
                 pT = lpszDot;
              }
 
@@ -1040,7 +1040,7 @@ ConfirmDialog(
    BOOL bConfirmReadOnlyByDefault,
    BOOL *pbReadOnlyAll)
 {
-   INT nRetVal;
+   INT_PTR nRetVal;
    PARAM_REPLACEDLG params;
    WCHAR szMessage[MAXMESSAGELEN];
 
@@ -3319,7 +3319,7 @@ Error:
    lstrcpy(pCopyInfo->pFrom, pFrom);
    lstrcpy(pCopyInfo->pTo, pTo);
 
-   dwStatus = DialogBoxParam(hAppInstance,
+   dwStatus = (DWORD)DialogBoxParam(hAppInstance,
                             (LPTSTR) MAKEINTRESOURCE(DMSTATUSDLG),
                             hwndFrame,
                             ProgressDlgProc,

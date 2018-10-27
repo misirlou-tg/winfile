@@ -168,8 +168,8 @@ ResizeControls(VOID)
 BOOL
 InitPopupMenus(UINT uMenus, HMENU hMenu, HWND hwndActive)
 {
-   DWORD	 dwSort;
-   DWORD     dwView;
+   LONG_PTR	 dwSort;
+   LONG_PTR  dwView;
    UINT      uMenuFlags, uCompFlags;
    HWND      hwndTree, hwndDir;
    DRIVE     drive;
@@ -1079,7 +1079,7 @@ DoDefault:
 
                } else {
 
-                  INT iExt;
+                  UINT iExt;
 
                   iExt = uMenuID / 100 - 1;
 

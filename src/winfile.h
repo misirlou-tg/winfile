@@ -1345,7 +1345,7 @@ Extern HWND hwndStatus        EQ( NULL );
 Extern TCHAR szWinfileHelp[]  EQ( TEXT("WINFILE.HLP") );
 Extern WCHAR wszWinfileHelp[] EQ( L"WINFILE.HLP" );
 
-Extern INT iNumExtensions     EQ( 0 );
+Extern UINT iNumExtensions     EQ( 0 );
 Extern EXTENSION extensions[MAX_EXTENSIONS];
 
 Extern DWORD (APIENTRY *lpfpUndelete)(HWND, LPTSTR) EQ( NULL );

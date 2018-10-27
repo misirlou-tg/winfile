@@ -223,7 +223,7 @@ VOID CentreWindow(
     //
     //  Get parent rect.
     //
-    Style = GetWindowLongPtr(hwnd, GWL_STYLE);
+    Style = (LONG)GetWindowLongPtr(hwnd, GWL_STYLE);
     if ((Style & WS_CHILD) == 0)
     {
         hwndParent = GetDesktopWindow();
@@ -1776,11 +1776,11 @@ int CompressErrMessageBox(
     //
     //  Put up the error message box - ABORT, RETRY, IGNORE, IGNORE ALL.
     //
-    rc = DialogBoxParam( hAppInstance,
-                         (LPTSTR) MAKEINTRESOURCE(COMPRESSERRDLG),
-                         hwndFrame,
-                         CompressErrDialogProc,
-                         (LPARAM)szFile );
+    rc = (int)DialogBoxParam( hAppInstance,
+                             (LPTSTR) MAKEINTRESOURCE(COMPRESSERRDLG),
+                             hwndFrame,
+                             CompressErrDialogProc,
+                             (LPARAM)szFile );
 
     //
     //  Return the user preference.

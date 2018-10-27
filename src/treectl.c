@@ -336,7 +336,7 @@ InsertDirectory(
    x = GetRealExtent(pNode, hwndLB, NULL, &len);
    x = CALC_EXTENT(pNode);
 
-   xTreeMax = GetWindowLongPtr(hwndTreeCtl, GWL_XTREEMAX);
+   xTreeMax = (UINT)GetWindowLongPtr(hwndTreeCtl, GWL_XTREEMAX);
    if (x > xTreeMax)
    {
        SetWindowLongPtr(hwndTreeCtl, GWL_XTREEMAX, x);
@@ -545,7 +545,7 @@ ReadDirLevel(
 
    hwndParent = GetParent(hwndTreeCtl);
 
-   dwView = GetWindowLongPtr(hwndParent, GWL_VIEW);
+   dwView = (UINT)GetWindowLongPtr(hwndParent, GWL_VIEW);
 
    //
    // we optimize the tree read if we are not adding pluses and
@@ -715,7 +715,7 @@ ReadDirLevel(
 
       if (bCancelTree) {
 
-         INT iDrive = GetWindowLongPtr(hwndParent, GWL_TYPE);
+         INT iDrive = (INT)GetWindowLongPtr(hwndParent, GWL_TYPE);
 
          if (!IsValidDisk(iDrive))
             PostMessage(hwndParent, WM_SYSCOMMAND, SC_CLOSE, 0L);
@@ -1396,7 +1396,7 @@ EmptyStatusAndReturn:
       StripBackslash(szPath);
 
       SetStatusText(SBT_NOBORDERS|255, SST_FORMAT|SST_RESOURCE,
-               (LPCTSTR)(DWORD)(fShowSourceBitmaps ? IDS_DRAG_COPYING : IDS_DRAG_MOVING),
+               MAKEINTRESOURCE(fShowSourceBitmaps ? IDS_DRAG_COPYING : IDS_DRAG_MOVING),
                szPath);
       UpdateWindow(hwndStatus);
 
@@ -1621,7 +1621,7 @@ TCWP_DrawItem(
       {
             // Blt the proper folder bitmap
 
-            view = GetWindowLongPtr(GetParent(hWnd), GWL_VIEW);
+            view = (DWORD)GetWindowLongPtr(GetParent(hWnd), GWL_VIEW);
 
             if (IsNetPath(pNode)) {
                 if (bDrawSelected)
@@ -1812,7 +1812,7 @@ CollapseLevel(HWND hwndLB, PDNODE pNode, INT nIndex)
   /* Disable redrawing early. */
   SendMessage(hwndLB, WM_SETREDRAW, FALSE, 0L);
 
-  xTreeMax = GetWindowLongPtr(GetParent(hwndLB), GWL_XTREEMAX);
+  xTreeMax = (UINT)GetWindowLongPtr(GetParent(hwndLB), GWL_XTREEMAX);
 
   nIndexT++;
 
@@ -2233,7 +2233,7 @@ TreeControlWndProc(
          if (cchMatch > wcslen(pNode->szName))
                 cchMatch = wcslen(pNode->szName);
          if (CompareString( LOCALE_USER_DEFAULT, NORM_IGNORECASE, 
-             rgchMatch, cchMatch, pNode->szName, cchMatch) == 2)
+             rgchMatch, (int)cchMatch, pNode->szName, (int)cchMatch) == 2)
             break;
 
       }
@@ -2481,7 +2481,7 @@ TreeControlWndProc(
          //
          // CurSel is returned from SendMessage
          //
-         CurSel = SendMessage(hwnd, TC_GETDIR, (WPARAM) -1,(LPARAM)szPath);
+         CurSel = (INT)SendMessage(hwnd, TC_GETDIR, (WPARAM) -1,(LPARAM)szPath);
          if (CurSel == -1)
          {
              break;
@@ -3020,7 +3020,7 @@ SameSelection:
          {
             HWND hwndLB;
 
-            bChangeDisplay = GetWindowLongPtr(hwndDir, GWLP_USERDATA);
+            bChangeDisplay = (BOOL)GetWindowLongPtr(hwndDir, GWLP_USERDATA);
 
             hwndLB = GetDlgItem (hwndDir, IDCW_LISTBOX);
             if (hwndLB && !bChangeDisplay)
@@ -3228,7 +3228,7 @@ ResetTreeMax(
     UINT xNew, xTreeMax;
 
 
-    NumItems = SendMessage(hwndLB, LB_GETCOUNT, 0, 0);
+    NumItems = (DWORD)SendMessage(hwndLB, LB_GETCOUNT, 0, 0);
 
     xTreeMax = 0;
 

@@ -1524,7 +1524,7 @@ UpdateDriveListComplete(VOID)
    HWND hwnd, hwndNext;
    DRIVE drive;
    DRIVEIND driveInd;
-   INT CurSel;
+   LRESULT CurSel;
    TCHAR szPath[2*MAXPATHLEN];
    LPTSTR lpszVol, lpszOldVol;
 
@@ -1536,7 +1536,7 @@ UpdateDriveListComplete(VOID)
       if (GetWindow(hwnd, GW_OWNER) || hwnd == hwndSearch)
          continue;
 
-      drive = GetWindowLongPtr(hwnd, GWL_TYPE);
+      drive = (DRIVE)GetWindowLongPtr(hwnd, GWL_TYPE);
 
       //
       // Invalidate cache to get real one in case the user reconnected
@@ -1830,7 +1830,7 @@ Fail:
 
          if (hwnd != hwndSearch && !GetWindow(hwnd, GW_OWNER)) {
 
-            drive = GetWindowLongPtr(hwnd, GWL_TYPE);
+            drive = (DRIVE)GetWindowLongPtr(hwnd, GWL_TYPE);
             DRIVESET(szPath, drive);
 
             if (!aDriveInfo[drive].bShareChkTried  &&

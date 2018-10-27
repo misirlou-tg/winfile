@@ -269,7 +269,7 @@ EnableCheckTBButtons(HWND hwndActive)
    // if the active window is a search window or lacks a directory pane,
    // else enable them all.
 
-   dwSort = GetWindowLongPtr(hwndActive, GWL_SORT) - IDD_NAME + IDM_BYNAME;
+   dwSort = (DWORD)GetWindowLongPtr(hwndActive, GWL_SORT) - IDD_NAME + IDM_BYNAME;
 
    fEnable = ((int)GetWindowLongPtr(hwndActive, GWL_TYPE) >= 0 &&
       HasDirWindow(hwndActive));
@@ -713,7 +713,7 @@ UnlockAndReturn:
       if (lpButton->fsStyle & TBSTYLE_SEP)
          goto LoadDescription;
 
-      iExt = lpButton->dwData - 1; // can now directly determine the extension with which the button is associated
+      iExt = (INT)lpButton->dwData - 1; // can now directly determine the extension with which the button is associated
 
       if ((UINT)iExt < (UINT)iNumExtensions) {
          tbl.idCommand = lpButton->idCommand % 100;
@@ -770,7 +770,7 @@ HandleToolbarSave(LPNMTBSAVE lpnmtSave)
         // for extension buttons, remove bias for both idCommand and iBitmap
         if (lpnmtSave->tbButton.dwData != 0)
         {
-            INT iExt = lpnmtSave->tbButton.dwData - 1;
+            INT iExt = (INT)lpnmtSave->tbButton.dwData - 1;
             baseId = extensions[iExt].Delta;
             baseIbm = extensions[iExt].iStartBmp;
         }
@@ -1057,7 +1057,7 @@ NormalHelp:
            FMS_HELPSTRING tbl;
 
 
-           iExt = lpTT->hdr.idFrom/100 - IDM_EXTENSIONS - 1;
+           iExt = ((INT)lpTT->hdr.idFrom)/100 - IDM_EXTENSIONS - 1;
 
            if (hwndExtensions && ((UINT)iExt < (UINT)iNumExtensions)) {
                tbl.idCommand = lpTT->hdr.idFrom % 100;
@@ -1078,7 +1078,7 @@ NormalHelp:
                StrNCpy(lpTT->szText, tbl.szHelp, MAXDESCLEN - 1);
 
            } else {
-               idString = lpTT->hdr.idFrom + MH_MYITEMS;
+               idString = (UINT)lpTT->hdr.idFrom + MH_MYITEMS;
 
                if (lpTT->hdr.idFrom == IDM_CONNECTIONS) {
                    idString = IDM_CONNECT + MH_MYITEMS;
@@ -1484,7 +1484,7 @@ AddExtensionToolbarButtons(BOOL bAll)
         }
 
         // map idCommand and iBitmap if this is a valid extension
-        INT iExt = tbButton.dwData - 1;
+        INT iExt = (INT)tbButton.dwData - 1;
         if ((UINT)iExt < (UINT)iNumExtensions)
         {
             // if we are not loading them all and this button's extension was seen during toolbar restore, skip
@@ -1525,7 +1525,7 @@ SaveRestoreToolbar(BOOL bSave)
    TBSAVEPARAMS tbSave;
 
    if (bSave) {
-      INT i;
+      UINT i;
       LPTSTR pName;
 
       // Write out a comma separated list of the current extensions
@@ -1556,7 +1556,7 @@ SaveRestoreToolbar(BOOL bSave)
       SendMessage(hwndToolbar, TB_INSERTBUTTON, 0,
          (LPARAM)(LPTBBUTTON)tbButtons);
    } else {
-      INT iExt;
+      UINT iExt;
       BOOL bRestored;
       LPTSTR pName, pEnd;
 

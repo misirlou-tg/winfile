@@ -457,7 +457,7 @@ DSRectItem(
 
          SetStatusText(SBT_NOBORDERS|255,
                        SST_RESOURCE|SST_FORMAT,
-                       (LPWSTR)(fShowSourceBitmaps ?
+                       MAKEINTRESOURCE(fShowSourceBitmaps ?
                           IDS_DRAG_COPYING :
                           IDS_DRAG_MOVING),
                        szTemp);
@@ -519,7 +519,7 @@ ClearStatus:
 
       SetStatusText(SBT_NOBORDERS|255,
                     SST_FORMAT | SST_RESOURCE,
-                    (LPWSTR)(fShowSourceBitmaps ?
+                    MAKEINTRESOURCE(fShowSourceBitmaps ?
                         IDS_DRAG_COPYING :
                         IDS_DRAG_MOVING),
                     szTemp);
@@ -556,7 +556,7 @@ ClearStatus:
 
       SetStatusText(SBT_NOBORDERS|255,
                     SST_FORMAT | SST_RESOURCE,
-                    (LPWSTR)(pIsProgram ?
+                    MAKEINTRESOURCE(pIsProgram ?
                        IDS_DRAG_EXECUTING :
                        (fShowSourceBitmaps ?
                           IDS_DRAG_COPYING :
@@ -754,7 +754,7 @@ DSTrackPoint(
    UINT      iSel;
    MSG       msg;
    RECT      rc;
-   DWORD     dwAnchor;
+   LRESULT     dwAnchor;
    DWORD     dwTemp;
    LPWSTR    pch;
    BOOL      bDir;

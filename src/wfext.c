@@ -359,7 +359,7 @@ GetDriveInfo(HWND hwnd, UINT uMsg, LPARAM lParam)
 VOID
 FreeExtensions()
 {
-   INT i;
+   UINT i;
    HMENU hMenuFrame;
 
    FreeToolbarExtensions();

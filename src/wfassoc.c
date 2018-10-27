@@ -301,7 +301,7 @@ UpdateSelectionExt(HWND hDlg, BOOL bForce)
 {
    TCHAR szExt[EXTSIZ+1];
    PEXT pExt;
-   INT i;
+   LRESULT i;
    TCHAR c, c2;
    PTCHAR p;
    PFILETYPE pFileType;
@@ -416,7 +416,7 @@ AssociateDlgProc(register HWND hDlg, UINT wMsg, WPARAM wParam, LPARAM lParam)
 {
    TCHAR szTemp[STRINGSIZ];
    PFILETYPE pFileType, pft2;
-   INT i;
+   LRESULT i;
    DWORD dwError;
    PEXT pExt, pExtNext;
 
@@ -739,7 +739,7 @@ DoConfigWinIni:
          //
          // Set it to the next thing
          //
-         dwError = SendDlgItemMessage(hDlg, IDD_CLASSLIST, LB_SETCURSEL, i, 0L);
+         dwError = (DWORD)SendDlgItemMessage(hDlg, IDD_CLASSLIST, LB_SETCURSEL, i, 0L);
          if (LB_ERR == dwError)
             i--;
 
@@ -1257,7 +1257,7 @@ AssociateFileDlgCommand(HWND hDlg,
                      //
                      // Found one, Highlight!
                      //
-                     i = SendDlgItemMessage(hDlg, IDD_EXTLIST, LB_FINDSTRINGEXACT,
+                     i = (INT)SendDlgItemMessage(hDlg, IDD_EXTLIST, LB_FINDSTRINGEXACT,
                         (WPARAM)-1, (LPARAM) &szExt[1]);
 
                      SendDlgItemMessage(hDlg, IDD_EXTLIST, LB_SETCURSEL, i, 0L);
@@ -1372,7 +1372,7 @@ AddDelUpdate:
       if (BN_CLICKED == GET_WM_COMMAND_CMD(wParam, lParam))
       {
          i = pAssociateFileDlgInfo->iAction =
-            SendDlgItemMessage(hDlg, IDD_ACTION, CB_GETCURSEL, 0, 0L);
+            (INT)SendDlgItemMessage(hDlg, IDD_ACTION, CB_GETCURSEL, 0, 0L);
 
          DDEDlgRead(hDlg, pAssociateFileDlgInfo, i);
          pAssociateFileDlgInfo->DDEInfo[i].bUsesDDE =
@@ -2225,7 +2225,7 @@ DWORD
 FileTypeRead(HWND hDlg,
    PASSOCIATEFILEDLGINFO pAssociateFileDlgInfo)
 {
-   UINT i;
+   INT i;
    PEXT pExt;
    PEXT pExtNext;
    PFILETYPE pFileType = pAssociateFileDlgInfo->pFileType;
@@ -2281,7 +2281,7 @@ FileTypeRead(HWND hDlg,
          if (!pExt->bDelete)
          {
             CharLower(&pExt->szExt[1]);
-            i = SendDlgItemMessage(hDlg, IDD_EXTLIST, LB_ADDSTRING, 0, (LPARAM)&pExt->szExt[1]);
+            i = (INT)SendDlgItemMessage(hDlg, IDD_EXTLIST, LB_ADDSTRING, 0, (LPARAM)&pExt->szExt[1]);
 
             SendDlgItemMessage(hDlg, IDD_EXTLIST, LB_SETITEMDATA, i, (LPARAM)pExt);
          }
@@ -2859,7 +2859,7 @@ ActionUpdate(HWND hDlg,
 {
     INT i;
 
-    i = SendDlgItemMessage(hDlg, IDD_ACTION, CB_GETCURSEL, 0, 0L);
+    i = (INT)SendDlgItemMessage(hDlg, IDD_ACTION, CB_GETCURSEL, 0, 0L);
 
     //
     // Update out internal variable
@@ -3138,7 +3138,7 @@ AssociateFileDlgExtDelete(HWND hDlg,
     GetDlgItemText(hDlg, IDD_EXT, pAssociateFileDlgInfo->szExt, COUNTOF(pAssociateFileDlgInfo->szExt));
     ExtClean(pAssociateFileDlgInfo->szExt);
 
-    i = SendDlgItemMessage( hDlg,
+    i = (INT)SendDlgItemMessage( hDlg,
                             IDD_EXTLIST,
                             LB_FINDSTRINGEXACT,
                             (WPARAM)-1,
@@ -3468,7 +3468,7 @@ RegExtDelete(HWND hDlg, HKEY hk, PEXT pExt)
    
     if (ERROR_SUCCESS == dwError)
     {
-        i = SendDlgItemMessage( hDlg,
+        i = (INT)SendDlgItemMessage( hDlg,
                                 IDD_EXT,
                                 CB_FINDSTRINGEXACT,
                                 (WPARAM)-1,

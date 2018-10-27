@@ -643,7 +643,7 @@ LoadBitmaps(VOID)
    //
    //  Skip the color table entries, if any
    //
-   lpBits += (1 << (lpBitmapInfo->biBitCount)) * sizeof(RGBQUAD);
+   lpBits += (1i64 << (lpBitmapInfo->biBitCount)) * sizeof(RGBQUAD);
 
    //
    // Create a color bitmap compatible with the display device
@@ -1062,8 +1062,11 @@ JAPANEND
 	if (OleInitialize(0) != NOERROR)
 		return FALSE;
 	
-   if (lpfnRegisterPenApp = (FNPENAPP)GetProcAddress((HANDLE)GetSystemMetrics(SM_PENWINDOWS), chPenReg))
-      (*lpfnRegisterPenApp)(1, TRUE);
+    if (GetSystemMetrics(SM_PENWINDOWS))
+    {
+        if (lpfnRegisterPenApp = (FNPENAPP)GetProcAddress(NULL, chPenReg))
+            (*lpfnRegisterPenApp)(1, TRUE);
+    }
 
 
    //
